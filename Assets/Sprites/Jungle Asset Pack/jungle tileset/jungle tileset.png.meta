@@ -7250,8 +7250,8 @@ TextureImporter:
     nameFileIdTable:
       jungle tileset_65: 2104811251
       jungle tileset_34: -2084114643
-      jungle tileset_189: 308443808
       jungle tileset_52: 1019594739
+      jungle tileset_314: 34081238
       jungle tileset_72: 345304818
       jungle tileset_64: -2096391419
       jungle tileset_205: 130878059
@@ -7328,10 +7328,10 @@ TextureImporter:
       jungle tileset_288: 485599365
       jungle tileset_184: -1556679535
       jungle tileset_165: -1138463465
-      jungle tileset_151: 1704459634
       jungle tileset_244: -1370962343
-      jungle tileset_14: -337603405
       jungle tileset_4: -1296208230
+      jungle tileset_151: 1704459634
+      jungle tileset_14: -337603405
       jungle tileset_74: -1150993285
       jungle tileset_66: 912351949
       jungle tileset_298: -2066189331
@@ -7581,10 +7581,10 @@ TextureImporter:
       jungle tileset_271: -1510496852
       jungle tileset_310: -170398611
       jungle tileset_80: 1903721063
-      jungle tileset_239: -1903711777
-      jungle tileset_314: 34081238
-      jungle tileset_61: 1269886228
       jungle tileset_211: -1210364648
+      jungle tileset_239: -1903711777
+      jungle tileset_189: 308443808
+      jungle tileset_61: 1269886228
       jungle tileset_132: 49341636
   spritePackingTag: 
   pSDRemoveMatte: 0

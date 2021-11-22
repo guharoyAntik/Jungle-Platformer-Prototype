@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -22,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ledge Climb")]
     [SerializeField] private Transform _wallCheck;
     [SerializeField] private Transform _ledgeCheck;
-
     private float _wallCheckDistance;
     private bool _isTouchingWall = false;
     private bool _isTouchingLedge = false;
@@ -50,7 +50,6 @@ public class PlayerMovement : MonoBehaviour
         CheckSurroundings();
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckInput();
@@ -64,10 +63,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckInput()
     {
-        if (!_canMove)
-        {
-            Debug.Log("Frozen");
-        }
         if (_canMove && _canFlip)
         {
             _dirX = Input.GetAxisRaw("Horizontal");
@@ -89,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    #region Ledge Climb Methods
     private void CheckSurroundings()
     {
         Vector3 facingDirection = (_isFacingRight ? Vector3.right : Vector3.left);
@@ -139,6 +135,7 @@ public class PlayerMovement : MonoBehaviour
         _canFlip = true;
         _ledgeDetected = false;
     }
+    #endregion
 
     private void UpdateAnimationState()
     {
@@ -196,6 +193,18 @@ public class PlayerMovement : MonoBehaviour
             Gizmos.DrawLine(_wallCheck.position, wallCheckTarget);
             Vector2 ledgeCheckTarget = new Vector2(_ledgeCheck.position.x - _wallCheckDistance, _ledgeCheck.position.y);
             Gizmos.DrawLine(_ledgeCheck.position, ledgeCheckTarget);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Portal"))
+        {
+            Portal portal = other.GetComponent<Portal>();
+            int targetScene = portal.TargetSceneIndex;
+            GameManager.Instance.UsedPortal = true;
+            GameManager.Instance.TargetPortalIndex = portal.Index;
+            SceneManager.LoadScene(targetScene);
         }
     }
 }
