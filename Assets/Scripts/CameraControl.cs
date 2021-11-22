@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
+    public static CameraControl Instance;
     [SerializeField] private Transform _target;
     [SerializeField] private Vector3 _offset;
     [SerializeField] private float _smoothSpeed = 0.125f;
 
-    [SerializeField] private float _leftLimit;
-    [SerializeField] private float _rightLimit;
-    [SerializeField] private float _topLimit;
-    [SerializeField] private float _bottomLimit;
+    public float LeftLimit;
+    public float RightLimit;
+    public float TopLimit;
+    public float BottomLimit;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(this);
+            return;
+        }
+        Instance = this;
+    }
 
     private void FixedUpdate()
     {
@@ -22,8 +33,8 @@ public class CameraControl : MonoBehaviour
 
         smoothedPosition = new Vector3
         (
-            Mathf.Clamp(smoothedPosition.x, _leftLimit + width / 2, _rightLimit - width / 2),
-            Mathf.Clamp(smoothedPosition.y, _bottomLimit + height / 2, _topLimit - height / 2),
+            Mathf.Clamp(smoothedPosition.x, LeftLimit + width / 2, RightLimit - width / 2),
+            Mathf.Clamp(smoothedPosition.y, BottomLimit + height / 2, TopLimit - height / 2),
             smoothedPosition.z
         );
 
@@ -33,9 +44,9 @@ public class CameraControl : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(new Vector2(_leftLimit, _topLimit), new Vector2(_rightLimit, _topLimit));
-        Gizmos.DrawLine(new Vector2(_leftLimit, _bottomLimit), new Vector2(_rightLimit, _bottomLimit));
-        Gizmos.DrawLine(new Vector2(_leftLimit, _topLimit), new Vector2(_leftLimit, _bottomLimit));
-        Gizmos.DrawLine(new Vector2(_rightLimit, _topLimit), new Vector2(_rightLimit, _bottomLimit));
+        Gizmos.DrawLine(new Vector2(LeftLimit, TopLimit), new Vector2(RightLimit, TopLimit));
+        Gizmos.DrawLine(new Vector2(LeftLimit, BottomLimit), new Vector2(RightLimit, BottomLimit));
+        Gizmos.DrawLine(new Vector2(LeftLimit, TopLimit), new Vector2(LeftLimit, BottomLimit));
+        Gizmos.DrawLine(new Vector2(RightLimit, TopLimit), new Vector2(RightLimit, BottomLimit));
     }
 }
