@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Portal
+  - BottomLine
+  - ExitPortal
+  - Key
+  - Lock
   layers:
   - Default
   - TransparentFX

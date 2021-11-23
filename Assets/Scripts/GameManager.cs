@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
     [HideInInspector] public bool UsedPortal;
     [HideInInspector] public int TargetPortalIndex;
+
+    [HideInInspector] public bool PickedKey = false;
 
     private void Awake()
     {
@@ -25,21 +26,31 @@ public class GameManager : MonoBehaviour
 
     private void CheckPortals(Scene current, Scene next)
     {
-        GameObject player = GameObject.FindGameObjectsWithTag("Player")[0];
-        if (UsedPortal == true)
-        {
-            UsedPortal = false;
-            GameObject[] portals = GameObject.FindGameObjectsWithTag("Portal");
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
-            for (int i = 0; i < portals.Length; ++i)
+        if (players.Length > 0)
+        {
+            GameObject player = players[0];
+            if (UsedPortal == true)
             {
-                if (portals[i].GetComponent<Portal>().Index == TargetPortalIndex)
+                UsedPortal = false;
+                GameObject[] portals = GameObject.FindGameObjectsWithTag("Portal");
+
+                for (int i = 0; i < portals.Length; ++i)
                 {
-                    player.transform.position = (Vector2)portals[i].transform.position + portals[i].GetComponent<Portal>().PlayerOffset;
-                    player.GetComponent<SpriteRenderer>().flipX = player.transform.position.x < portals[i].transform.position.x;
-                    break;
+                    if (portals[i].GetComponent<Portal>().Index == TargetPortalIndex)
+                    {
+                        player.transform.position = (Vector2)portals[i].transform.position + portals[i].GetComponent<Portal>().PlayerOffset;
+                        player.GetComponent<SpriteRenderer>().flipX = player.transform.position.x < portals[i].transform.position.x;
+                        break;
+                    }
                 }
             }
         }
+    }
+
+    public void GameOver()
+    {
+        SceneManager.LoadScene(0);
     }
 }

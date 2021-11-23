@@ -178,7 +178,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(_ledgePos1, _ledgePos2);
+        // Gizmos.DrawLine(_ledgePos1, _ledgePos2);
         Gizmos.color = Color.red;
         if (_isFacingRight)
         {
@@ -205,6 +205,31 @@ public class PlayerMovement : MonoBehaviour
             GameManager.Instance.UsedPortal = true;
             GameManager.Instance.TargetPortalIndex = portal.Index;
             SceneManager.LoadScene(targetScene);
+        }
+
+        if (other.CompareTag("BottomLine"))
+        {
+            _canMove = false;
+            _canFlip = false;
+            GameManager.Instance.GameOver();
+        }
+
+        if (other.CompareTag("Key"))
+        {
+            GameManager.Instance.PickedKey = true;
+            Debug.Log("Picked Key");
+            Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("Lock") && GameManager.Instance.PickedKey)
+        {
+            GameManager.Instance.PickedKey = false;
+            other.GetComponent<Lock>().Unlock();
+        }
+
+        if (other.CompareTag("ExitPortal"))
+        {
+            SceneManager.LoadScene(2);
         }
     }
 }
